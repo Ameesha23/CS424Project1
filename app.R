@@ -340,9 +340,26 @@ server <- function(input, output) {
   output$AllDaysRight <- renderPlot({
     #inputYear = as.numeric(input$year)
     YearSub <- subset(dataRight(), year == inputYearRight())
-    ggplot(YearSub, aes(x = newDate, y = rides/1000)) + geom_bar(stat = "identity", fill = "#6888BE") +
+    ggplot(YearSub, aes(x = newDate, y = rides/1000, color = (colour = cut(month, c(-Inf, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, Inf))))) + 
+      geom_bar(stat = "identity") +
+      scale_color_manual(name = "month",
+                         values = c("(-Inf,1]" = "red",
+                                    "(1,2]" = "yellow",
+                                    "(2,3]" = "red",
+                                    "(3,4]" = "yellow",
+                                    "(4,5]" = "red",
+                                    "(5,6]" = "yellow",
+                                    "(6,7]" = "red",
+                                    "(7,8]" = "yellow",
+                                    "(8,9]" = "red",
+                                    "(9,10]" = "yellow",
+                                    "(10, 11]" = "red",
+                                    "(11,12]" = "yellow",
+                                    "(12,Inf]" = "red")) +
+                         #labels = c("<= 17", "17 < qsec <= 19", "> 19")) + 
       labs(x = "Year", y ="Rides (in thousands)") + 
       theme_bw() +
+      theme(legend.position="none") +
       #theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
       theme(text = element_text(family = "sans", face = "bold")) +
       theme(plot.title = element_text(hjust = 0.5, size=20), axis.title=element_text(size=12))  
