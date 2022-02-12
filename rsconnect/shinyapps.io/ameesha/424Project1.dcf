@@ -5,9 +5,9 @@ account: ameesha
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 5609532
-bundleId: 5566464
+bundleId: 5573027
 url: https://ameesha.shinyapps.io/424Project1/
-when: 1644529784.95472
-lastSyncTime: 1644529784.95474
+when: 1644700880.76004
+lastSyncTime: 1644700880.76007
 asMultiple: FALSE
 asStatic: FALSE
