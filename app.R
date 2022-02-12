@@ -58,17 +58,14 @@ ui <- dashboardPage(
   dashboardBody(
     sidebarPanel(
       HTML("<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>"),
+      selectInput("yearLeft", h6("Select a year to visualize on left screen"), years, selected = ""),
+      selectInput("dataLeft", h6("Select Data for left screen"), dataframe, selected = ""),
+      checkboxInput("checkTypeLeft", h6("View Data Tables"), value = FALSE),
+      selectInput("yearRight", h6("Select a year to visualize on right screen"), years, selected = ""),
+      selectInput("dataRight", h6("Select Data for right screen"), dataframe, selected = ""),
+      checkboxInput("checkTypeRight", h6("View Data Tables"), value = FALSE),
       HTML("<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>"),
-      selectInput("yearLeft", h1("Select a year to visualize on left screen"), years, selected = ""),
-      selectInput("dataLeft", h1("Select Data for left screen"), dataframe, selected = ""),
-      checkboxInput("checkTypeLeft", h2("View Data Tables"), value = FALSE),
-      HTML("<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>"),
-      selectInput("yearRight", h1("Select a year to visualize on right screen"), years, selected = ""),
-      selectInput("dataRight", h1("Select Data for right screen"), dataframe, selected = ""),
-      checkboxInput("checkTypeRight", h2("View Data Tables"), value = FALSE),
-      HTML("<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>"),
-      HTML("<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>"),
-      HTML("<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>"),
+
       
       width = 1,
       tags$style(HTML("
@@ -93,19 +90,25 @@ ui <- dashboardPage(
                    ),
         
         fluidRow(
-          column(1),
-          column(11,
-                 fluidRow(
+          fillCol( width = "100%", height = "100%", 
                    conditionalPanel(
                      condition = "input.yearLeft == ''",
-                     box(title = "UIC Halsted Rides per Year", solidHeader = TRUE, status = "primary", width = 60,
+                     box(title = "UIC Halsted Rides per Year", solidHeader = TRUE, status = "primary", width = 12,
                          plotOutput("UICHalstedYears", height = 500)
                          )
                      )
                    ),
                  align = "center"
-                 )
-          ),
+                 ),
+          #fluidRow(
+          #  conditionalPanel(
+          #    condition = "input.yearLeft == ''",
+          #    box(title = "UIC Halsted Rides per Year", solidHeader = TRUE, status = "primary", width = 12,
+          #       column(width = 12, plotOutput("UICHalstedYears", height = 500))
+          #        )
+          #    )
+          #  ),
+          #align = "center"
         
         
         fluidRow(
@@ -114,9 +117,9 @@ ui <- dashboardPage(
                    column(12,
                           conditionalPanel(
                             condition = "input.yearLeft != '' && input.checkTypeLeft",
-                            box(title = "Rides per Day Data", solidHeader = TRUE, status = "primary", width = 40,
+                            box(title = "Rides per Day Data", solidHeader = TRUE, status = "primary", width = 60,
                                 #DT::dataTableOutput("TableDayLeft", height = 150)
-                                div(DT::dataTableOutput("TableDayLeft"), style = "font-size:106%")
+                                div(DT::dataTableOutput("TableDayLeft"), style = "font-size:103%")
                             ),
                             br()
                           )
@@ -127,9 +130,9 @@ ui <- dashboardPage(
                    column(12,
                           conditionalPanel(
                             condition = "input.yearLeft != '' && input.checkTypeLeft",
-                            box(title = "Rides per Month Data", solidHeader = TRUE, status = "primary", width = 40,
+                            box(title = "Rides per Month Data", solidHeader = TRUE, status = "primary", width = 60,
                                 #DT::dataTableOutput("TableMonthLeft", height = 150)
-                                div(DT::dataTableOutput("TableMonthLeft"), style = "font-size:107%")
+                                div(DT::dataTableOutput("TableMonthLeft"), style = "font-size:99%")
                             ),
                             br()
                           )
@@ -140,9 +143,9 @@ ui <- dashboardPage(
                    column(12,
                           conditionalPanel(
                             condition = "input.yearLeft != '' && input.checkTypeLeft",
-                            box(title = "Rides per Weekday Data", solidHeader = TRUE, status = "primary", width = 40,
+                            box(title = "Rides per Weekday Data", solidHeader = TRUE, status = "primary", width = 60,
                                 #DT::dataTableOutput("TableWdayLeft", height = 150)
-                                div(DT::dataTableOutput("TableWdayLeft"), style = "font-size:107%")
+                                div(DT::dataTableOutput("TableWdayLeft"), style = "font-size:98%")
                             ),
                             br()
                           )
@@ -154,8 +157,8 @@ ui <- dashboardPage(
                    column(12,
                           conditionalPanel(
                             condition = "input.yearLeft != ''",
-                            box(title = paste("Rides per Day"), solidHeader = TRUE, status = "primary", width = 40,
-                                plotOutput("AllDaysLeft", height = 200)
+                            box(title = paste("Rides per Day"), solidHeader = TRUE, status = "primary", width = 60,
+                                plotOutput("AllDaysLeft", height = 300)
                                 ),
                             br()
                             )
@@ -167,7 +170,7 @@ ui <- dashboardPage(
                           conditionalPanel(
                             condition = "input.yearLeft != ''",
                             box(title = "Rides per Month", solidHeader = TRUE, status = "primary", width = 40,
-                                plotOutput("MonthlyDataLeft", height = 200)
+                                plotOutput("MonthlyDataLeft", height = 300)
                                 ),
                             br()
                             )
@@ -179,7 +182,7 @@ ui <- dashboardPage(
                           conditionalPanel(
                             condition = "input.yearLeft != ''",
                             box(title = "Rides per Weekday", solidHeader = TRUE, status = "primary", width = 40,
-                                plotOutput("WeeklyDataLeft", height = 200)
+                                plotOutput("WeeklyDataLeft", height = 300)
                                 ),
                             br()
                             )
@@ -389,7 +392,7 @@ server <- function(input, output) {
       YearSub <- subset(dataLeft(), year == inputYearLeft())
       ReturnData <- YearSub[,c(4, 6)]
     }, 
-    options = list(searching = FALSE, pageLength = 3, lengthChange = FALSE, order = list(list(1, 'desc'))
+    options = list(searching = FALSE, pageLength = 4, lengthChange = FALSE, order = list(list(1, 'desc'))
     ), rownames = FALSE 
     )
   )
@@ -401,7 +404,7 @@ server <- function(input, output) {
         ReturnData <- as.data.frame(aggregate(YearSub$rides, by=list(month=YearSub$month), FUN=sum))
       }
     }, 
-    options = list(searching = FALSE, pageLength = 3, lengthChange = FALSE, order = list(list(1, 'desc'))
+    options = list(searching = FALSE, pageLength = 6, lengthChange = FALSE, order = list(list(1, 'desc'))
     ), rownames = FALSE 
     )
   )
@@ -413,7 +416,7 @@ server <- function(input, output) {
         ReturnData <- as.data.frame(aggregate(YearSub$rides, by=list(wday=YearSub$wday), FUN=sum))
       }
     }, 
-    options = list(searching = FALSE, pageLength = 3, lengthChange = FALSE, order = list(list(1, 'desc'))
+    options = list(searching = FALSE, pageLength = 6, lengthChange = FALSE, order = list(list(1, 'desc'))
     ), rownames = FALSE 
     )
   )
